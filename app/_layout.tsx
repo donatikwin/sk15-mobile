@@ -1,24 +1,72 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { API_URL } from "@/constants/api";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
+import axios from "axios";
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+import { Stack } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 
-import { useColorScheme } from '@/hooks/use-color-scheme';
+SplashScreen.preventAutoHideAsync();
 
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldShowBanner: true,
+    shouldShowList: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
+function PushTokenRegistrar() {
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (!user || !Device.isDevice) return;
+
+    const registerToken = async () => {
+      try {
+        const { status } = await Notifications.requestPermissionsAsync();
+        if (status !== "granted") return;
+
+        const token = await Notifications.getExpoPushTokenAsync({
+          projectId: "94331f8d-ce23-4794-986d-9f59c1f42dcc",
+        });
+
+        await axios.post(`${API_URL}/api/push/token`, {
+          user_id: user.id,
+          token: token.data,
+          platform: "android",
+        });
+      } catch {}
+    };
+
+    registerToken();
+  }, [user]);
+
+  return null;
+}
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  useEffect(() => {
+    SplashScreen.hideAsync();
+  }, []);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+    <AuthProvider>
+      <PushTokenRegistrar />
+      <StatusBar style="light" />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(app)" />
+        <Stack.Screen
+          name="article/[id]"
+          options={{ animation: "slide_from_right" }}
+        />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    </AuthProvider>
   );
 }
