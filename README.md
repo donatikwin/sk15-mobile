@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/images/logo.png" alt="SK-15 Logo" width="120" />
+  <img src="./assets/images/logo-black.png" alt="SK-15 Logo" width="120" />
   
   # SK-15 — Новости Петропавловска
   
