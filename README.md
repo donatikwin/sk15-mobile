@@ -1,50 +1,141 @@
-# Welcome to your Expo app 👋
+<div align="center">
+  <img src="./assets/images/logo.png" alt="SK-15 Logo" width="120" />
+  
+  # SK-15 — Новости Петропавловска
+  
+  Мобильное приложение для чтения новостей города Петропавловск  
+  и Северо-Казахстанской области (СКО)
+  
+  ![React Native](https://img.shields.io/badge/React_Native-0.81-blue?style=flat-square&logo=react)
+  ![Expo](https://img.shields.io/badge/Expo-SDK_54-black?style=flat-square&logo=expo)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square&logo=typescript)
+  ![Platform](https://img.shields.io/badge/Platform-Android-green?style=flat-square&logo=android)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+</div>
 
-## Get started
+---
 
-1. Install dependencies
+## 📱 О проекте
 
-   ```bash
-   npm install
-   ```
+**SK-15** — это новостное мобильное приложение для жителей Петропавловска и СКО. Название отсылает к коду региона — Северо-Казахстанская область (SKO-15).
 
-2. Start the app
+Приложение агрегирует новости из местных СМИ, позволяет читать статьи, оставлять комментарии и получать push-уведомления о важных событиях.
 
-   ```bash
-   npx expo start
-   ```
+**Бэкенд и административная панель:** [petropavlovsk-news.vercel.app](https://petropavlovsk-news.vercel.app)
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## ✨ Возможности
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+| Функция | Описание |
+|---------|----------|
+| 📰 Лента новостей | Категории, поиск, фильтрация, Hero-карточка |
+| 🔖 Избранное | Сохранение статей локально |
+| ❤️ Лайки | Синхронизация с сервером |
+| 💬 Комментарии | Добавление, удаление своих |
+| 🔔 Push-уведомления | Через Expo Push API |
+| 👤 Профиль | Редактирование, загрузка аватара |
+| 🌐 Парсер новостей | Автосбор с pkzsk.info |
+| ⚡ Кеширование | AsyncStorage, TTL 5 минут |
+| 🦴 Skeleton-загрузка | Плейсхолдеры вместо спиннера |
+| 🔠 Размер шрифта | Для слабовидящих (Аа кнопка) |
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## 🛠 Технологический стек
+React Native 0.81    — кроссплатформенная разработка
+Expo SDK 54          — инструменты и компоненты
+Expo Router 6        — файловая маршрутизация
+TypeScript 5.9       — статическая типизация
+Axios                — HTTP запросы
+AsyncStorage         — локальное хранилище
+Expo Notifications   — push-уведомления
+Expo Image Picker    — загрузка аватара
+Lucide RN            — иконки
+
+---
+
+## 🗂 Структура проекта
+app/
+_layout.tsx          — Корневой layout (AuthProvider)
+index.tsx            — Splash-экран с анимацией
+(auth)/
+login.tsx          — Экран входа
+register.tsx       — Регистрация
+(app)/
+index.tsx          — Главная (лента новостей)
+bookmarks.tsx      — Избранное
+profile.tsx        — Профиль пользователя
+article/
+[id].tsx           — Детальная страница статьи
+context/
+AuthContext.tsx      — Глобальный контекст авторизации
+constants/
+api.ts               — Базовый URL API
+colors.ts            — Цветовая палитра
+
+---
+
+## 🚀 Запуск проекта
+
+### Требования
+- Node.js 18+
+- npm / yarn
+- Expo Go на телефоне (Android)
+
+### Установка
 
 ```bash
-npm run reset-project
+# Клонировать репозиторий
+git clone https://github.com/ВАШ_ЮЗЕРНЕЙМ/sk15-mobile.git
+cd sk15-mobile
+
+# Установить зависимости
+npm install --legacy-peer-deps
+
+# Запустить
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Отсканируй QR-код в приложении **Expo Go** на телефоне.
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 📦 Сборка APK
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+# Установить EAS CLI
+npm install -g eas-cli
 
-## Join the community
+# Авторизация
+eas login
 
-Join our community of developers creating universal apps.
+# Сборка APK
+eas build -p android --profile preview
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+## 🎨 Цветовая палитра
+
+| Цвет | Hex | Назначение |
+|------|-----|------------|
+| Primary | `#0A5C9B` | Кнопки, акценты |
+| Accent | `#E8A020` | Золотой акцент |
+| Dark | `#0d1b2a` | Фон шапки |
+| Background | `#F0F4F8` | Фон страниц |
+
+---
+
+## 🔗 Связанные репозитории
+
+- **Административная панель:** [petropavlovsk-news.vercel.app/admin](https://petropavlovsk-news.vercel.app/admin)
+- **API документация:** [petropavlovsk-news.vercel.app/api](https://petropavlovsk-news.vercel.app/api)
+
+---
+
+<div align="center">
+  Разработано в Петропавловске, СКО 🇰🇿
+  <br/>
+  © 2026 Бессараб Данил
+</div>
