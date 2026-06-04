@@ -7,7 +7,6 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
-import { Alert } from "react-native";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,15 +24,10 @@ function PushTokenRegistrar() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || !Device.isDevice) return;
 
     const registerToken = async () => {
       try {
-        if (!Device.isDevice) {
-          Alert.alert("Push Debug", "Not a real device — skipping");
-          return;
-        }
-
         const { status: existingStatus } =
           await Notifications.getPermissionsAsync();
         let finalStatus = existingStatus;
@@ -43,27 +37,18 @@ function PushTokenRegistrar() {
           finalStatus = status;
         }
 
-        if (finalStatus !== "granted") {
-          Alert.alert("Push Debug", "Permission not granted: " + finalStatus);
-          return;
-        }
+        if (finalStatus !== "granted") return;
 
         const tokenData = await Notifications.getExpoPushTokenAsync({
           projectId: "94331f8d-ce23-4794-986d-9f59c1f42dcc",
         });
 
-        Alert.alert("Push Token получен", tokenData.data);
-
-        const res = await axios.post(`${API_URL}/api/push/token`, {
+        await axios.post(`${API_URL}/api/push/token`, {
           user_id: user.id,
           token: tokenData.data,
           platform: "android",
         });
-
-        Alert.alert("Push Token сохранён", JSON.stringify(res.data));
-      } catch (e: any) {
-        Alert.alert("Push Error", String(e?.message || e));
-      }
+      } catch {}
     };
 
     registerToken();
