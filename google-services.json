@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "204003105864",
+    "project_id": "sk15-cffd0",
+    "storage_bucket": "sk15-cffd0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204003105864:android:ea63ec039b3ce8c8980c7d",
+        "android_client_info": {
+          "package_name": "com.danil_bessarab.sk15"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDelSw1_U2tpPINkLemQp-fBeRrQWQwBl4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
